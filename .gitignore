@@ -1,3 +1,5 @@
 api/node_modules
 api/.env
 api/dist
+web/node_modules
+web/vite.config.ts
