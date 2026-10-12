@@ -1,5 +1,6 @@
 interface reqUser {
   userid: number;
+  email : string,
 }
 
 declare global {

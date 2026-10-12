@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Caslon+Condensed:ital,wght@0,400..700;1,400..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+body {
+  text-align: center;
+  background-color: #051923;
+  color: #00a6fb;
+}
+
+.main-heading {
+  color: #00a6fb;
+  font-family: "Libre Caslon Condensed", serif;
+  font-size: 60px;
+}
+
+.get-started-btn {
+  font-size: 30px;
+  color: #00a6fb;
+  text-decoration: none;
+}
+
+.get-started-btn:hover {
+  text-decoration: underline white;
+  text-underline-offset: 10px;
+}
+
+.sub-heading {
+
+  color: #00a6fb;
+  font-size: 20px;
+  font-family: "Edu QLD Had", cursive;
+
+}
+
+.universal-div {
+  margin-top: 8%;
+}
+
+.footer-links {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-links:hover {
+  text-decoration: underline #006494;
+  text-underline-offset: 5px;
+}
+
+
+.input-field{
+
+height: 0.3in;
+width: 19%;
+
+}
+
+
+.get-in-btn{
+
+height: 0.3in;
+width: 5%;
+border-radius: 4% ;
+border: none;
+
+}
+
+.get-in-btn:hover{
+
+  background-color: #00a6fb;
+}
