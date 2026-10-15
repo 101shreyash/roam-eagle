@@ -7,12 +7,12 @@ async function Signup(req: Request, res: Response) {
   type userRole = "landlord" | "applicant";
 
   const reqemail = req.body.email as string;
-  const email = reqemail?.toLowerCase();
+  const email = reqemail?.toLowerCase().trim();
 
   const password = req.body.password as string;
 
   const reqrole: userRole = req.body.role;
-  const role = reqrole?.toLowerCase();
+  const role = reqrole?.toLowerCase().trim();
 
   if (!email) {
     return res.status(400).json({
@@ -35,9 +35,7 @@ async function Signup(req: Request, res: Response) {
     });
   }
 
-  if (
-    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) === false
-  ) {
+  if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) === false) {
     return res.status(400).json({
       sucess: false,
       message: "Please enter a valid email address.",
@@ -178,7 +176,7 @@ const passMatched =  await bcrypt.compare(password , result.rows[0]?.hash_passwo
  }
 
  await pool.query("DELETE FROM users WHERE userid = $1" , [userid])
- 
+
 res.clearCookie("jwt")
 
  return res.status(200).json({

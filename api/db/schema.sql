@@ -143,7 +143,6 @@ CREATE TABLE public.user_info (
     city text NOT NULL,
     full_name text NOT NULL,
     religion public.user_religion DEFAULT 'unaffiliated'::public.user_religion NOT NULL,
-    native_language text NOT NULL,
     profile_picture text NOT NULL
 );
 
@@ -286,4 +285,5 @@ ALTER TABLE ONLY public.user_info
 --
 
 INSERT INTO public.schema_migrations (version) VALUES
-    ('20261011073248');
+    ('20261011073248'),
+    ('20261014131457');

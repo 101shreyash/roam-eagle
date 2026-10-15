@@ -7,6 +7,8 @@ declare global {
   namespace Express {
     interface Request {
       user?: reqUser;
+      file : any,
+      files : any;
     }
   }
 }
