@@ -1,4 +1,3 @@
-import { log } from "console";
 import { Request, Response } from "express";
 
 async function putProfileInfo(req: Request, res: Response) {
@@ -87,6 +86,7 @@ const allowedRelgion : string[] = ["islam" , "christianity" , "buddhism" , "unaf
 
   }
 
+
   if (/^[a-zA-Z ]+$/.test(country) === false) {
 
    return res.status(400).json({
@@ -127,10 +127,13 @@ const allowedRelgion : string[] = ["islam" , "christianity" , "buddhism" , "unaf
       success : false,
       message : "City name should not be more than 100 characters and less than 1"
     })
-
   }
 
-  console.log("tocheckAndValidate", profilePicture);
+
+  console.log(userid);
+
+  console.log(profilePicture);
+
 
 }
 

@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Caslon+Condensed:ital,wght@0,400..700;1,400..700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 body {
   text-align: center;
@@ -85,20 +84,42 @@ img {
   text-underline-offset: 5px;
 }
 
-.faq-container{
-
+.faq-container {
   border: 2px solid #051923;
-  padding-left: 10px;
-  background-color: #006494;
+  padding: 0 10px;
+  background-color: #0a364d;
   color: white;
-
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
 }
 
-.faq-container:hover{
-
+.faq-container:hover {
   background-color: #00aaff;
+}
 
+.faq-container h1 {
+  margin: 0;
+  font-size: clamp(16px, 2.5vw, 24px);
+}
 
+.faq-container::after {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.faq-container + .sub-heading:empty {
+  display: none;
+}
+
+.faq-container + .sub-heading {
+  margin: 0;
+  padding: 12px 10px 0;
+  line-height: 1.6;
 }
 
 .upload-container {
@@ -120,7 +141,9 @@ img {
   border: 2px dashed #00a6fb;
   border-radius: 6px;
   cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .input-file-field:hover {
@@ -133,7 +156,6 @@ img {
   outline-offset: 4px;
 }
 
-/* The "Choose File" button inside the input */
 .input-file-field::file-selector-button {
   margin-right: 14px;
   padding: 8px 16px;
@@ -151,7 +173,6 @@ img {
   background-color: white;
 }
 
-/* ---------- Tablet ---------- */
 @media (max-width: 1024px) {
   .input-field {
     width: 35%;
@@ -167,7 +188,6 @@ img {
   }
 }
 
-/* ---------- Mobile ---------- */
 @media (max-width: 768px) {
   .universal-div {
     margin-top: 12%;
@@ -177,7 +197,7 @@ img {
   .form-fields {
     width: 70%;
     height: 40px;
-    font-size: 16px; /* prevents iOS zoom-on-focus */
+    font-size: 16px;
   }
 
   .get-in-btn {
@@ -196,7 +216,6 @@ img {
   }
 }
 
-/* ---------- Small phones ---------- */
 @media (max-width: 480px) {
   .universal-div {
     margin-top: 15%;
@@ -220,7 +239,6 @@ img {
     padding: 12px;
   }
 
-  /* Stack the button above the file name on tiny screens */
   .input-file-field::file-selector-button {
     display: block;
     margin: 0 auto 10px;

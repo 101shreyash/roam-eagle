@@ -6,6 +6,7 @@ import UserInfo from "./components/info"
 import AboutUS from "./components/aboutUs";
 import UploadProfile from "./components/uploadProfile";
 import FAQ from "./components/faq";
+import ExploreProperty from "./components/exploreProperty";
 
 function App()  {
 
@@ -22,6 +23,8 @@ function App()  {
 <Route path="/login" element = {<Login/>}/>
 <Route path="/userinfo" element = {<UserInfo/>}/>
 <Route path="/uploadprofile" element = {<UploadProfile/>}/>
+<Route path="/exploreproperties" element = {<ExploreProperty/>}/>
+
 
 <Route path="/aboutus" element = {<AboutUS/>}/>
 <Route path="/faq" element = {<FAQ/>}/>

@@ -1,18 +1,9 @@
 function AboutUS() {
   return (
     <div>
-      <h1
-        style={{
-          textAlign: "left",
-          textDecoration: "underline white 10px",
-          textUnderlineOffset: "10px",
-        }}
-        className="main-heading"
-      >
-        About Us
-      </h1>
+      <h1 style={{textAlign: "left", textDecoration: "underline white 10px", textUnderlineOffset: "10px",}} className="main-heading"> About Us </h1>
 
-      <p style={{ textAlign: "left" }} className="sub-heading">
+      <p style={{ textAlign: "left" , color : "white" }} className="sub-heading">
         Our platform makes it easier for landlords to list their properties and
         connect directly with potential tenants. Whether you're a landlord
         looking to rent out your property or someone searching for a place to
@@ -26,7 +17,7 @@ function AboutUS() {
 <br /><br />
   <h1 style={{textDecoration : "underline white 10px" , textUnderlineOffset : "20px"}}>Important Notice & Disclaimer !</h1>
      <br />
-      <p style={{textAlign : "left"}} className="sub-heading">
+      <p style={{textAlign : "left" , color : "white"}} className="sub-heading">
         We are a property listing and management platform only. We help
         landlords advertise their properties and help potential tenants discover
         properties and connect directly with landlords. We are not involved in

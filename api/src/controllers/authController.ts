@@ -37,21 +37,21 @@ async function Signup(req: Request, res: Response) {
 
   if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) === false) {
     return res.status(400).json({
-      sucess: false,
+      success: false,
       message: "Please enter a valid email address.",
     });
   }
 
   if (password.length < 8) {
     return res.status(400).json({
-      sucess: false,
+      success: false,
       message: "Password should be atleast of 8 characters long",
     });
   }
 
-  if ((role === "applicant") === false && (role === "landlord") === false) {
+  if (role!== "applicant" && role!== "landlord") {
     return res.status(400).json({
-      sucess: false,
+      success: false,
       message: "Enter valid Role. Role must be either landlord or applicant.",
     });
   }
@@ -65,7 +65,7 @@ async function Signup(req: Request, res: Response) {
     );
 
     return res.status(200).json({
-      sucess: true,
+      success: true,
       message: "Signup Sucessfull",
     });
   } catch (error: any) {
@@ -73,8 +73,8 @@ async function Signup(req: Request, res: Response) {
 
     if (error?.code === "23505") {
       return res.status(409).json({
-        sucess: false,
-        message: "username alredy exits try something unique",
+        success: false,
+        message: "email alredy exits try adding new one.",
       });
     }
 
@@ -91,14 +91,14 @@ async function Login(req: Request, res: Response) {
 
   if (!email) {
     return res.status(400).json({
-      sucess: false,
+      success: false,
       message: "Email is required",
     });
   }
 
   if (!plainPassword) {
     return res.status(400).json({
-      sucess: false,
+      success: false,
       message: "Password is required",
     });
   }
@@ -120,7 +120,7 @@ async function Login(req: Request, res: Response) {
 
   if (result.rowCount === 0) {
     return res.status(401).json({
-      sucess: false,
+      success: false,
       message: "Invalid Credentials",
     });
   }
@@ -129,7 +129,7 @@ async function Login(req: Request, res: Response) {
 
   if (!matched) {
     return res.status(401).json({
-      sucess: false,
+      success: false,
       message: "Invalid Credentials , Email or password didn't matched.",
     });
   }
@@ -141,7 +141,7 @@ async function Login(req: Request, res: Response) {
   );
   res.cookie("jwt", token);
   return res.status(200).json({
-    sucess: true,
+    success: true,
     message: "logged In Sucessfull",
   });
 }
@@ -156,7 +156,7 @@ async function DeleteAccount(req : Request , res : Response) {
   if (!password) {
 
    return res.status(400).json({
-      sucess : false,
+      success : false,
       message : "You must include your password before deleting your account."
     })
 
@@ -180,7 +180,7 @@ const passMatched =  await bcrypt.compare(password , result.rows[0]?.hash_passwo
 res.clearCookie("jwt")
 
  return res.status(200).json({
-  sucess : true,
+  success : true,
   message : `Your account registered with ${result.rows[0].email} got deleted permanently.`
  })
 
