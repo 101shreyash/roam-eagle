@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +7,38 @@ function UserInfo() {
   let navigate = useNavigate();
 
   let { register, handleSubmit } = useForm();
+
+  async function CheckInfo() {
+
+   const result = await fetch("http://localhost:8001/api/checkprofile" , {
+    credentials : "include",
+    method : "GET",
+    headers : ({
+      'Content-Type' : 'application/json'
+    })
+   })
+
+   console.log(result);
+
+   const msg = await result.json()
+
+   if (msg.message === true && result.status === 200) {
+
+       return navigate("/myprofile")
+
+   }
+
+
+  }
+
+
+  useEffect(() => {
+
+  CheckInfo();
+
+  } , [])
+
+
 
   async function AfterSubmit(data: any) {
 
@@ -113,8 +146,8 @@ function UserInfo() {
         <br />
         <h2 className="aux-head">Which Religion Do You Follow ?</h2>
         <select className="form-fields" required {...register("religion")}>
-          <option hidden value="other">
-            Select Below
+          <option hidden value="unaffiliated">
+            unaffiliated
           </option>
           <option>hinduism</option>
           <option>islam</option>

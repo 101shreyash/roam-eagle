@@ -7,12 +7,11 @@ import AboutUS from "./components/aboutUs";
 import UploadProfile from "./components/uploadProfile";
 import FAQ from "./components/faq";
 import ExploreProperty from "./components/exploreProperty";
+import MyProfile from "./components/profile";
 
 function App()  {
 
-
   return <>
-
 
 <Routes>
 
@@ -23,6 +22,7 @@ function App()  {
 <Route path="/login" element = {<Login/>}/>
 <Route path="/userinfo" element = {<UserInfo/>}/>
 <Route path="/uploadprofile" element = {<UploadProfile/>}/>
+<Route path="/myprofile" element = {<MyProfile/>}/>
 <Route path="/exploreproperties" element = {<ExploreProperty/>}/>
 
 

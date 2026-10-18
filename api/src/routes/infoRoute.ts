@@ -1,5 +1,5 @@
 import express from "express"
-import { getProfileInfo, putProfileInfo } from "../controllers/infoController.js";
+import { checkProfile, getProfileInfo, putProfileInfo, upload } from "../controllers/infoController.js";
 import ValidateAuthentication from "../middleware/authMiddleware.js";
 
 
@@ -7,7 +7,8 @@ import ValidateAuthentication from "../middleware/authMiddleware.js";
 const Router = express.Router();
 
 
-Router.post("/profileinfo" , ValidateAuthentication , putProfileInfo);
+Router.get("/checkprofile" , ValidateAuthentication ,checkProfile );
+Router.post("/profileinfo" , ValidateAuthentication , upload.single("profilepic") ,  putProfileInfo);
 Router.get("/profileinfo" , ValidateAuthentication , getProfileInfo);
 
 

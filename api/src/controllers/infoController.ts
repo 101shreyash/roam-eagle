@@ -1,7 +1,14 @@
 import { Request, Response } from "express";
+import multer from "multer";
+import pool from "../db.js";
+
+const upload = multer({dest : "uploads"});
+export {upload};
+
 
 async function putProfileInfo(req: Request, res: Response) {
-  type commonReligions =| "islam"| "christianity" | "buddhism" | "unaffiliated" | "hinduism" | "other";
+
+type commonReligions =| "islam"| "christianity" | "buddhism" | "unaffiliated" | "hinduism" | "other";
 
 const allowedRelgion : string[] = ["islam" , "christianity" , "buddhism" , "unaffiliated" , "hinduism" , "other"]
 
@@ -11,7 +18,7 @@ const allowedRelgion : string[] = ["islam" , "christianity" , "buddhism" , "unaf
   const country: string = req.body.country?.toLowerCase().trim();
   const city: string = req.body.city?.toLowerCase().trim();
   const religion: commonReligions = req.body.religion?.toLowerCase().trim();
-  const profilePicture = req.files;
+  const profilePicture = req.file.filename
 
 
   if (!fullname || fullname === undefined) {
@@ -129,14 +136,72 @@ const allowedRelgion : string[] = ["islam" , "christianity" , "buddhism" , "unaf
     })
   }
 
+  if (!profilePicture) {
 
-  console.log(userid);
+     return res.status(400).json({
+      success : false,
+      message : "Profile Picture is required."
+    })
 
-  console.log(profilePicture);
+  }
+
+
+  try {
+
+    await pool.query("INSERT INTO user_info (userid , profession , country , city , full_name , religion , profile_picture) VALUES ($1,$2,$3,$4,$5,$6,$7)" , [userid , profession , country , city , fullname , religion , profilePicture])
+
+  return res.status(200).json({
+      success : true,
+      message : `Welcome to our platform ${fullname} thanks for joining us.`
+    })
+
+
+  }
+
+
+  catch (error : any) {
+
+    console.log(error.message);
+    return res.status(500).json({
+      success : false,
+      message : "Server Error"
+    })
+
+  }
 
 
 }
 
-async function getProfileInfo() {}
 
-export { putProfileInfo, getProfileInfo };
+
+async function checkProfile(req : Request , res : Response) {
+
+  const userid =  req.user?.userid
+   const result = await pool.query("SELECT userid FROM user_info WHERE userid = $1" , [userid])
+
+   if (result.rowCount === 0) {
+
+    return res.status(404).json({
+      success : false,
+      message : false,
+    })
+   }
+
+  return res.status(200).json({
+    success : true,
+    message : true,
+
+   })
+
+}
+
+
+async function getProfileInfo() {
+
+
+  // Man on Work.
+
+
+}
+
+export { putProfileInfo, checkProfile ,  getProfileInfo };

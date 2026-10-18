@@ -86,8 +86,8 @@ async function Signup(req: Request, res: Response) {
 }
 
 async function Login(req: Request, res: Response) {
-  const email = req.body.email as string;
-  const plainPassword = req.body.password;
+  const email = req.body?.email as string;
+  const plainPassword = req.body?.password as string;
 
   if (!email) {
     return res.status(400).json({
@@ -151,7 +151,7 @@ async function DeleteAccount(req : Request , res : Response) {
 
   const userid = req.user?.userid
 
-  const password = req.body.password
+  const password = req.body?.password
 
   if (!password) {
 
