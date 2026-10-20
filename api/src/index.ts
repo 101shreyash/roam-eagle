@@ -4,6 +4,7 @@ import cors from "cors"
 
 import AuthRoute from "./routes/authRoute.js"
 import InfoRoute from "./routes/infoRoute.js"
+import SettingRoutes from "./routes/settingRoute.js"
 
 import cookieParser from "cookie-parser";
 
@@ -24,6 +25,8 @@ app.use(cookieParser())
 
 app.use("/auth" , AuthRoute)
 app.use("/api" , InfoRoute)
+app.use("/api/settings" , SettingRoutes)
+
 
 
 app.listen(PORT , () => {

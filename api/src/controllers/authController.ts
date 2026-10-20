@@ -185,7 +185,20 @@ res.clearCookie("jwt")
  })
 
 
+}
+
+
+
+async function Logout(req: Request , res : Response) {
+
+ res.clearCookie("jwt")
+
+return res.status(200).json({
+  success : true,
+  message : "Logged Out Sucessfull"
+ })
+
 
 }
 
-export { Signup, Login  , DeleteAccount};
+export { Signup, Login  , DeleteAccount , Logout};
