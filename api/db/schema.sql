@@ -67,7 +67,8 @@ CREATE TABLE public.property_info (
     country text NOT NULL,
     city text NOT NULL,
     postal_code text NOT NULL,
-    monthly_price numeric(10,2)
+    monthly_price numeric(10,2),
+    negotiable boolean NOT NULL
 );
 
 
@@ -286,4 +287,5 @@ ALTER TABLE ONLY public.user_info
 
 INSERT INTO public.schema_migrations (version) VALUES
     ('20261011073248'),
-    ('20261014131457');
+    ('20261014131457'),
+    ('20261021143703');

@@ -13,12 +13,12 @@ type commonReligions =| "islam"| "christianity" | "buddhism" | "unaffiliated" | 
 const allowedRelgion : string[] = ["islam" , "christianity" , "buddhism" , "unaffiliated" , "hinduism" , "other"]
 
   const userid = req.user?.userid;
-  const profession: string = req.body.profession?.toLowerCase().trim();
-  const fullname: string = req.body.fullname?.toLowerCase().trim();
-  const country: string = req.body.country?.toLowerCase().trim();
-  const city: string = req.body.city?.toLowerCase().trim();
-  const religion: commonReligions = req.body.religion?.toLowerCase().trim();
-  const profilePicture = req.file.filename
+  const profession: string = req.body?.profession?.toLowerCase()?.trim();
+  const fullname: string = req.body?.fullname?.toLowerCase()?.trim();
+  const country: string = req.body?.country?.toLowerCase()?.trim();
+  const city: string = req.body?.city?.toLowerCase()?.trim();
+  const religion: commonReligions = req.body?.religion?.toLowerCase().trim();
+  const profilePicture = req.file?.filename
 
 
   if (!fullname || fullname === undefined) {
@@ -35,7 +35,7 @@ const allowedRelgion : string[] = ["islam" , "christianity" , "buddhism" , "unaf
     });
   }
 
-  if (!city || fullname === city) {
+  if (!city || city === undefined) {
     return res.status(400).json({
       success: false,
       message: "City name is required.",
@@ -49,7 +49,7 @@ const allowedRelgion : string[] = ["islam" , "christianity" , "buddhism" , "unaf
     });
   }
 
-  if (profession.length < 2 || profession.length > 100) {
+  if (profession?.length < 2 || profession?.length > 100) {
 
      return res.status(400).json({
       success : false,
@@ -66,7 +66,7 @@ const allowedRelgion : string[] = ["islam" , "christianity" , "buddhism" , "unaf
     })
   }
 
-  if (fullname.length < 5 || fullname.length > 100) {
+  if (fullname?.length < 5 || fullname?.length > 100) {
 
    return res.status(400).json({
       success : false,
@@ -119,7 +119,7 @@ const allowedRelgion : string[] = ["islam" , "christianity" , "buddhism" , "unaf
     })
   }
 
-  if (country.length < 4 || country.length > 100 ) {
+  if (country?.length < 4 || country?.length > 100 ) {
 
    return res.status(400).json({
       success : false,
@@ -128,7 +128,7 @@ const allowedRelgion : string[] = ["islam" , "christianity" , "buddhism" , "unaf
 
   }
 
-  if (city.length < 1 || city.length > 100 ) {
+  if (city?.length < 1 || city?.length > 100 ) {
 
   return  res.status(400).json({
       success : false,
@@ -196,10 +196,27 @@ async function checkProfile(req : Request , res : Response) {
 }
 
 
-async function getProfileInfo() {
+async function getProfileInfo(req : Request , res : Response) {
+
+const userid = req.user?.userid
+
+const result = await pool.query("SELECT users.role , users.joined_at , user_info.profession , user_info.country , user_info.city , user_info.full_name , user_info.religion , user_info.profile_picture FROM users INNER JOIN user_info ON users.userid = user_info.userid WHERE users.userid = $1;" , [userid])
 
 
-  // Man on Work.
+if (result.rowCount === 0) {
+
+return res.json({
+    success : false,
+    message : "No profile found make sure to add some information about yourself."
+  })
+
+}
+
+return res.status(200).json({
+  success : true,
+  message : result.rows[0]
+})
+
 
 
 }

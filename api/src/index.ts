@@ -22,6 +22,8 @@ app.use(cors({
 app.use(express.urlencoded({extended : true}))
 app.use(express.json());
 app.use(cookieParser())
+// app.use(express.static("uploads"))
+app.use("/profilepicture" , express.static("uploads"));
 
 app.use("/auth" , AuthRoute)
 app.use("/api" , InfoRoute)

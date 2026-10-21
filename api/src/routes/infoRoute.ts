@@ -9,7 +9,7 @@ const Router = express.Router();
 
 Router.get("/checkprofile" , ValidateAuthentication ,checkProfile );
 Router.post("/profileinfo" , ValidateAuthentication , upload.single("profilepic") ,  putProfileInfo);
-Router.get("/profileinfo" , ValidateAuthentication , getProfileInfo);
+Router.get("/profileinfo" , ValidateAuthentication ,   getProfileInfo);
 
 
 

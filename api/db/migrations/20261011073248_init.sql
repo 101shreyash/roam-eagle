@@ -28,7 +28,7 @@ CREATE TABLE
     country VARCHAR(100) NOT NULL,
     city TEXT NOT NULL,
     full_name TEXT NOT NULL,
-    religion user_religion NOT NULL DEFAULT 'unaffiliated',
+    religion user_religiroon NOT NULL DEFAULT 'unaffiliated',
     native_language TEXT NOT NULL,
     profile_picture TEXT NOT NULL
   );
