@@ -5,7 +5,6 @@ function ValidateAuthentication(req: Request,res: Response,next: NextFunction) {
 
   const token = req.cookies.jwt;
 
-
   if (!token) {
     return res.status(401).json({
       sucess: false,
@@ -15,7 +14,6 @@ function ValidateAuthentication(req: Request,res: Response,next: NextFunction) {
 
 
   jwt.verify(token, process.env.JWTSECKEY as string,  (err: any, decoded: any) => {
-
 
 
       if (err) {

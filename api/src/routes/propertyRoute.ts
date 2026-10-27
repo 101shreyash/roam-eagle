@@ -7,3 +7,6 @@ const router = express.Router();
 
 
 router.post("/property" , ValidateAuthentication , ListProperty)
+
+
+export default router;

@@ -1,6 +1,7 @@
 interface reqUser {
   userid: number;
   email : string,
+  role : string,
 }
 
 

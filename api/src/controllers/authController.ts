@@ -104,7 +104,7 @@ async function Login(req: Request, res: Response) {
   }
 
   const result = await pool.query(
-    "SELECT userid , email ,hash_password, role FROM users WHERE email = $1",
+    "SELECT userid , role , email ,hash_password FROM users WHERE email = $1",
     [email],
   );
 
@@ -116,7 +116,7 @@ async function Login(req: Request, res: Response) {
   }
 
   const userinfo: Userinfo = result.rows[0];
-  //  console.log(userinfo);
+
 
   if (result.rowCount === 0) {
     return res.status(401).json({
@@ -135,10 +135,10 @@ async function Login(req: Request, res: Response) {
   }
 
   const token = jwt.sign(
-    {email: email, userid: userinfo.userid },
-    process.env.JWTSECKEY as string,
-    { expiresIn: "2h" },
+    {email: email, userid: userinfo.userid , role : userinfo.role},  process.env.JWTSECKEY as string,
+    { expiresIn: "2h" ,  },
   );
+
   res.cookie("jwt", token);
   return res.status(200).json({
     success: true,
