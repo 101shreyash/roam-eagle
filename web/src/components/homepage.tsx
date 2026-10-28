@@ -15,9 +15,7 @@ function Homepage() {
        <p className="sub-heading"> Zero Commission Included , Contact Landlords Directly . </p>
 
     <br /><br /><br />
-      <Link className="get-started-btn" to="/signup">
-        Get started
-      </Link>
+      <Link className="get-started-btn" to="/signup">  Get started  </Link>
     </div>
   );
 }

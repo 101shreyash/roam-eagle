@@ -100,7 +100,7 @@ CREATE TABLE public.property_visual (
     property_id integer NOT NULL,
     visual_id integer NOT NULL,
     property_image_url text NOT NULL,
-    property_video_url text NOT NULL
+    property_video_url text
 );
 
 
@@ -288,4 +288,5 @@ ALTER TABLE ONLY public.user_info
 INSERT INTO public.schema_migrations (version) VALUES
     ('20261011073248'),
     ('20261014131457'),
-    ('20261021143703');
+    ('20261021143703'),
+    ('20261028150622');

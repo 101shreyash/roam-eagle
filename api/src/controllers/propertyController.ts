@@ -13,7 +13,6 @@ async function ListProperty(req: Request, res: Response) {
   const city: string = req.body.city?.trim();
   const postalCode: string = req.body.postalcode?.trim();
   const monthlyprice: number = req.body.monthlyprice?.trim();
-
   const negotiable: string = req.body.negotiable
 
 
@@ -206,7 +205,6 @@ try {
   })
 
 
-
 }
 
 catch (error) {
@@ -217,11 +215,56 @@ catch (error) {
     message : "Server Error"
   })
 
+}
 
 }
 
 
 
+async function AddPropertyVisuals(req : Request , res : Response) {
+
+  // work to be continued.
+  // we will use multer so that we can grab collection of multipart form data (property image)
+  // and have to collect mutliple of it (so it would be a new concept for me since in the past i've only worked with
+  // uploading single file through multer , now its time to work with array of files which would be a worth complex
+  //  problem to solve for me next.
+
 }
 
-export default ListProperty;
+
+async function MyProperties(req : Request , res : Response) {
+
+const userid = req.user?.userid
+const role = req.user?.role
+
+if (role === "applicant") {
+
+  return res.status(403).json({
+    success : false,
+    message : "You as an applicant cannot list your properties."
+  })
+
+}
+
+const result = await pool.query("SELECT property_info.property_id , property_info.property_status , property_info.title , property_info.description , property_info.total_room , property_info.country , property_info.city , property_info.postal_code , property_info.monthly_price , property_info.negotiable , property_visual.visual_id , property_visual.property_image_url FROM property_info INNER JOIN property_visual ON property_info.property_id = property_visual.property_id  WHERE property_info.userid = $1;" , [userid])
+
+
+if (result.rowCount === 0) {
+
+  return res.status(404).json({
+    success : false,
+    message : "You've not listed any properties till now ."
+  })
+
+}
+
+
+return res.status(200).json({
+  success : true,
+  message :  result.rows
+})
+
+
+}
+
+export {ListProperty , MyProperties , AddPropertyVisuals};

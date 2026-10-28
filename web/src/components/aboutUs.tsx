@@ -1,7 +1,7 @@
 function AboutUS() {
   return (
     <div>
-      <h1 style={{textAlign: "left", textDecoration: "underline white 10px", textUnderlineOffset: "10px",}} className="main-heading"> About Us </h1>
+      <h1 style={{textAlign: "center", textDecoration: "underline white 10px", textUnderlineOffset: "10px",}} className="main-heading"> About Us </h1>
 
       <p style={{ textAlign: "left" , color : "white" }} className="sub-heading">
         Our platform makes it easier for landlords to list their properties and

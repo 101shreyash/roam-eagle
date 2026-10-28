@@ -10,9 +10,14 @@ function Signup() {
 
   async function AfterSubmit(data : any) {
 
+
     const email : string = data.email.toLowerCase().trim();
     const password : string = data.password
     const role : string = data.role.toLowerCase().trim();
+
+    console.log(data);
+
+
 
     if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) === false) {
 
@@ -34,8 +39,7 @@ function Signup() {
     }
 
 
-
-  try {
+    try {
 
     const result = await fetch("http://localhost:8001/auth/signup" , {
 
@@ -77,7 +81,6 @@ function Signup() {
 
   }
 
-
   return (
     <div className="universal-div">
       <h1 className="main-heading" style={{fontSize : "30px"}}>Signup Now To Get Strated !</h1>
@@ -87,8 +90,17 @@ function Signup() {
         <br /><br />
         <input type="password"  placeholder="Enter your password" required {...register("password")} className="input-field"/>
        <br /><br />
-     <input type="text" placeholder="Enter your role" className="input-field" required {...register("role")}/>
-      <br /><br />
+
+<h2 className="main-heading" style={{fontSize : "20px"}}>Define Your Role</h2>
+
+<label>
+  <input type="radio" {...register("role")} required value="applicant"/> applicant
+</label>
+<label>
+  <input type="radio" {...register("role")} required value="landlord" /> landlord
+</label>
+
+      <br /><br /><br /><br />
         <button className="get-in-btn" type="submit">Signup</button>
         <p> Alredy Have an account ? <Link to="/login" className="footer-links"> Login </Link>
         </p>
