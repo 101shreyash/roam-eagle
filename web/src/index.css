@@ -431,6 +431,156 @@ form:has(input[name="property_status"]) .get-in-btn {
   margin-top: 8px;
 }
 
+/* ===== Change Profile Details (styles the existing markup, no extra classes needed) ===== */
+
+/* shared styles for the edit inputs / update buttons */
+.update-inputs {
+  height: 44px;
+  padding: 0 12px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--ink);
+  background-color: var(--white);
+  border: 1px solid var(--white);
+  border-radius: var(--radius);
+}
+
+.update-inputs::placeholder {
+  color: #5f7480;
+}
+
+.update-inputs:focus {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.update-btns {
+  min-width: 96px;
+  height: 44px;
+  padding: 0 20px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  background-color: var(--blue);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.update-btns:hover {
+  background-color: var(--white);
+}
+
+/* page layout: two columns (value | action) */
+form:has(> .profile-image) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 0;
+  row-gap: 10px;
+  align-items: stretch;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+form:has(> .profile-image) > h1 {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: clamp(28px, 6vw, 44px);
+  line-height: 1.15;
+}
+
+form:has(> .profile-image) > .profile-image {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-bottom: 0;
+}
+
+/* pencil under the profile picture */
+form:has(> .profile-image) > .profile-image + button {
+  grid-column: 1 / -1;
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 14px;
+  padding: 0;
+  color: var(--white);
+  background-color: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+form:has(> .profile-image) > .profile-image + button:hover {
+  color: var(--ink);
+  background-color: var(--blue);
+}
+
+/* profile picture upload row */
+form:has(> .profile-image) > .upload-container {
+  grid-column: 1 / -1;
+  margin: 0 0 14px;
+  padding: 0;
+}
+
+/* detail rows: h2 + pencil */
+form:has(> .profile-image) > h2 {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  margin: 0;
+  padding: 0 16px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  overflow-wrap: anywhere;
+  background-color: var(--panel);
+  border-left: 3px solid var(--line);
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+form:has(> .profile-image) > h2 + button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  padding: 0;
+  color: var(--white);
+  background-color: var(--panel);
+  border: none;
+  border-left: 1px solid var(--line);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  cursor: pointer;
+}
+
+form:has(> .profile-image) > h2 + button:hover {
+  color: var(--ink);
+  background-color: var(--blue);
+}
+
+form:has(> .profile-image) > .profile-image + button svg,
+form:has(> .profile-image) > h2 + button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* edit row: input + update button */
+form:has(> .profile-image) > .update-inputs {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+form:has(> .profile-image) > .update-inputs + .update-btns {
+  height: 48px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
 @media (max-width: 768px) {
   .universal-div {
     margin-top: 6vh;
@@ -481,5 +631,19 @@ form:has(input[name="property_status"]) .get-in-btn {
   .profile-image {
     width: 128px;
     height: 128px;
+  }
+
+  form:has(> .profile-image) > h2 {
+    padding: 0 12px;
+    font-size: 15px;
+  }
+
+  form:has(> .profile-image) > h2 + button {
+    width: 48px;
+  }
+
+  form:has(> .profile-image) > .update-btns {
+    min-width: 80px;
+    padding: 0 14px;
   }
 }

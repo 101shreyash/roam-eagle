@@ -18,7 +18,7 @@ function MyProfile() {
 
 async function GetUserProfile() {
 
- const result =  await fetch("  http://localhost:8001/api/profileinfo" , {
+ const result =  await fetch("http://localhost:8001/api/profileinfo" , {
     credentials : "include",
     headers : ({
       'Content-Type' : "application/json"
@@ -26,6 +26,7 @@ async function GetUserProfile() {
   })
 
   const msg = await result.json();
+
 
   setfullname(msg.message.full_name)
   setrole(msg.message.role)
