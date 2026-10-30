@@ -241,7 +241,7 @@ if (role === "applicant") {
 
   return res.status(403).json({
     success : false,
-    message : "You as an applicant cannot list your properties."
+    message : "You as an applicant cannot list and view your properties."
   })
 
 }

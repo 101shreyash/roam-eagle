@@ -24,7 +24,8 @@ async function putProfileInfo(req: Request, res: Response) {
   const country: string = req.body?.country?.toLowerCase()?.trim();
   const city: string = req.body?.city?.toLowerCase()?.trim();
   const religion: commonReligions = req.body?.religion?.toLowerCase().trim();
-  const profilePicture = req.file?.filename;
+  const profilePicture = req.file?.filename
+
 
   if (!fullname || fullname === undefined) {
     return res.status(400).json({
@@ -221,7 +222,7 @@ async function UpdateProfileInfo(req : Request , res : Response) {
   const country: string = req.body?.country?.toLowerCase()?.trim();
   const city: string = req.body?.city?.toLowerCase()?.trim();
   const religion: commonReligions = req.body?.religion?.toLowerCase().trim();
-  const profilePicture = req.file?.filename;
+  const profilePicture = req.file?.filename || req.body?.profilepic;
 
 
   if (profession?.length < 2 || profession?.length > 100) {
@@ -294,18 +295,12 @@ async function UpdateProfileInfo(req : Request , res : Response) {
   }
 
 
+await pool.query("UPDATE user_info SET profession = $1 , country = $2 , city = $3 , full_name = $4 , religion = $5 , profile_picture = $6 WHERE userid = $7" , [profession , country , city , fullname , religion , profilePicture , userid]);
 
-console.log('profession' , profession);
-console.log('fullname' , fullname);
-console.log('country' , country);
-console.log('city' , city);
-console.log('religion' , religion);
-console.log('newpp' , req.file);
-
-
-// to be continued.
-
-
+return res.status(200).json({
+  success : true ,
+  message : "Profile Details Changed Sucessfully."
+})
 
 
 }

@@ -6,7 +6,6 @@ import { IoPencil } from "react-icons/io5";
 
 function ChangeProfileDetails() {
 
-
   // Userinfo
 
   let [city , setcity] = useState("");
@@ -19,7 +18,6 @@ function ChangeProfileDetails() {
   let {register , handleSubmit , reset}  = useForm();
 
   // usestates for displaying input fields
-
 
   let [editcity , setEditCity] = useState(false);
   let [editcountry , setEditCountry] = useState(false);
@@ -55,7 +53,6 @@ const msg = await result.json();
  setreligion(msg.message.religion)
 
 }
-
 
 
 useEffect(() => {
@@ -102,11 +99,15 @@ function EditReligion() {
 
 async function AfterChanges(data : any) {
 
-  const userFullname : string  = data.fullname?.toLowerCase().trim();
-  const userProfession : string  = data.profession?.toLowerCase().trim();
-  const userCountry : string  = data.countryname?.toLowerCase().trim();
-  const userCity : string  = data.cityname?.toLowerCase().trim();
-  const userReligion : string  = data.religion?.toLowerCase().trim();
+
+
+  const userFullname : string  = data.fullname?.toLowerCase().trim()  || fullname;
+  const userProfession : string  = data.profession?.toLowerCase().trim() || profession;
+  const userCountry : string  = data.countryname?.toLowerCase().trim() || country;
+  const userCity : string  = data.cityname?.toLowerCase().trim() || city;
+  const userReligion : string  = data.religion?.toLowerCase().trim() || religion;
+  const userpp : string = data?.userpp?.[0] || profilepicture;
+
 
     if (userFullname?.length < 5 || userFullname?.length > 100) {
 
@@ -170,7 +171,7 @@ async function AfterChanges(data : any) {
    multipartFormData.append("city" , userCity)
    multipartFormData.append("country" , userCountry)
    multipartFormData.append("religion" , userReligion)
-   multipartFormData.append("profilepic" , profilepicture)
+   multipartFormData.append("profilepic" ,  userpp)
 
 
    const result = await fetch("http://localhost:8001/api/profileinfo" , {
@@ -180,9 +181,16 @@ async function AfterChanges(data : any) {
 
    })
 
-   console.log(result);
+   const msg = await result.json();
 
-  return toast.success("Details Changed Sucessfully")
+   if (result.status === 200 && msg.success === true ) {
+
+      toast.success("Details Changed Sucessfully")
+      reset();
+    return fetchUserProfile();
+
+   }
+
 
 
 
@@ -196,12 +204,13 @@ return <div className="universal-div">
 
 <h1>Feel Free To Change Your Profile Details.</h1>
 
-<img className="profile-image" src={`http://localhost:8001/profilepicture/${profilepicture}`} alt="profile_picture" />
+<img className="profile-image" src={`http://localhost:8001/profilepicture/${profilepicture}`} alt="profile_picture"/>
+
 <button type="button" onClick={EditPP}><IoPencil/> </button>
 
 {editprofilepicture === true ? <div className="upload-container">
 
-<input className="input-file-field" type="file" {...register("profilepic")}/>
+<input className="input-file-field" type="file" {...register("userpp")}/>
 <button className="update-btns">Submit</button>
 
 </div>  : ""}

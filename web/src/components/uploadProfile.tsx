@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 
-
 function UploadProfile() {
 
  let profileInfo =  useLocation();
