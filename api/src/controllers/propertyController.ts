@@ -1,5 +1,13 @@
 import { Request, Response } from "express";
 import pool from "../db.js";
+import multer from "multer";
+
+
+// ----------- this belongs to Add propertry Visuals Function Down Below -----------------
+const propertyPictures = multer({dest : "propertypics"})
+export {propertyPictures};
+// -----------------------------------------------------------
+
 
 async function ListProperty(req: Request, res: Response) {
 
@@ -197,10 +205,12 @@ try {
 
   const result = await pool.query("INSERT INTO property_info (userid , property_status , title , description , total_room , country , city , postal_code , monthly_price , negotiable) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING property_id" , [userid , propertyStatus , title , description , totalrooms , basedOnCountry , city , postalCode , monthlyprice , negotiable] )
 
-  const propertyid = result.rows[0].property_id
+  const propertyid = result.rows[0]
 
   return res.status(200).json({
     success : true,
+    propertyid : propertyid, // we're adding this so that frontend could make sense of the property visual
+    // and user would be able to add property visual according to the property they've just listed.
     message : `Your property is sucessfully registered with the property number of ${propertyid}`
   })
 
@@ -223,11 +233,51 @@ catch (error) {
 
 async function AddPropertyVisuals(req : Request , res : Response) {
 
-  // work to be continued.
-  // we will use multer so that we can grab collection of multipart form data (property image)
-  // and have to collect mutliple of it (so it would be a new concept for me since in the past i've only worked with
-  // uploading single file through multer , now its time to work with array of files which would be a worth complex
-  //  problem to solve for me next.
+const propertyPictures : any = req.files
+const propertyid : number = req.body.propertyid;
+
+const totalNumberofImages : number = propertyPictures.length
+
+if (totalNumberofImages < 2) {
+
+  return res.status(400).json({
+    success : false,
+    messaage : "Add atleast two images of your property."
+  })
+
+}
+
+if (totalNumberofImages > 4 ) {
+
+  return res.status(400).json({
+    success : false,
+    messaage : "Don't add too many propertyImages keep it between 2 to 4."
+  })
+
+}
+
+console.log('propertyId' , propertyid);
+
+const image1 = propertyPictures[0]
+const image2 = propertyPictures[1]
+const image3 = propertyPictures[2]
+const image4 = propertyPictures[3]
+
+console.log(image1?.filename);
+console.log(image2?.filename);
+console.log(image3?.filename);
+console.log(image4?.filename);
+
+
+
+// work to be continued.
+
+// we may get undefined on image 3 and 4 ( cause the image 1 and 2 are mandatory and there's no chance we will get them undefined but we have to look for the image 2 and 3 .)
+
+// and once we get those values (filename) we have to insert it into the database manually.
+// maybe ill find some ways to automate the repetion of using manual inserts 4 times or ill do smtg ...
+
+
 
 }
 

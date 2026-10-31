@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { IoPencil } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 
 function ChangeProfileDetails() {
 
   // Userinfo
+
+  let navigate = useNavigate();
 
   let [city , setcity] = useState("");
   let [country , setcountry] = useState("");
@@ -185,9 +188,8 @@ async function AfterChanges(data : any) {
 
    if (result.status === 200 && msg.success === true ) {
 
-      toast.success("Details Changed Sucessfully")
-      reset();
-    return fetchUserProfile();
+    toast.success("Details Changed Sucessfully")
+    navigate("/myprofile")
 
    }
 

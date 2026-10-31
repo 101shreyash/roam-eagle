@@ -99,9 +99,13 @@ try {
 
   const msg = await result.json();
 
+  const propertyid : number = msg.propertyid.property_id
+
+
+
 if (msg.success === true && result.status === 200) {
 
- return navigate("/propertyvisuals")
+ return navigate("/propertyvisuals" , {state : propertyid})
 
 }
 
