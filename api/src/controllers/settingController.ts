@@ -82,6 +82,25 @@ async function ChangePassword(req: Request, res: Response) {
 
 
 
+async function DeleteAllListedProperties(req : Request , res : Response) {
+
+const role = req.user?.role
+
+if (role !== "landlord") {
+
+ return res.status(403).json({
+    success : false,
+    message : "You as a applicant cannot perform this action."
+  })
+
+}
+
+// we will continue this action...
 
 
-export { ChangePassword};
+}
+
+
+
+
+export { ChangePassword , DeleteAllListedProperties};

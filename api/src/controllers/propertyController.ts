@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+import e, { Request, Response } from "express";
 import pool from "../db.js";
 import multer from "multer";
+import { log } from "node:console";
 
 
 // ----------- this belongs to Add propertry Visuals Function Down Below -----------------
@@ -233,8 +234,28 @@ catch (error) {
 
 async function AddPropertyVisuals(req : Request , res : Response) {
 
+const role = req.user?.role
 const propertyPictures : any = req.files
 const propertyid : number = req.body.propertyid;
+
+if (role === "applicant") {
+
+ return res.status(403).json({
+    success : false,
+    message : "As a applicant you can't list your properties."
+  })
+
+}
+
+
+if (!propertyid) {
+
+  return res.status(400).json({
+    success : false,
+    message : "To add pictures of your property you need to have property details first."
+  })
+
+}
 
 const totalNumberofImages : number = propertyPictures.length
 
@@ -256,30 +277,68 @@ if (totalNumberofImages > 4 ) {
 
 }
 
-console.log('propertyId' , propertyid);
-
-const image1 = propertyPictures[0]
-const image2 = propertyPictures[1]
-const image3 = propertyPictures[2]
-const image4 = propertyPictures[3]
-
-console.log(image1?.filename);
-console.log(image2?.filename);
-console.log(image3?.filename);
-console.log(image4?.filename);
+const image1 = propertyPictures[0]?.filename
+const image2 = propertyPictures[1]?.filename
+const image3 = propertyPictures[2]?.filename
+const image4 = propertyPictures[3]?.filename
 
 
+try {
 
-// work to be continued.
+//IMAGE 1
+ await pool.query("INSERT INTO property_visual (property_id , property_image_url) VALUES ($1,$2)" , [propertyid , image1])
+// IMAGE 2
+ await pool.query("INSERT INTO property_visual (property_id , property_image_url) VALUES ($1,$2)" , [propertyid , image2])
 
-// we may get undefined on image 3 and 4 ( cause the image 1 and 2 are mandatory and there's no chance we will get them undefined but we have to look for the image 2 and 3 .)
 
-// and once we get those values (filename) we have to insert it into the database manually.
-// maybe ill find some ways to automate the repetion of using manual inserts 4 times or ill do smtg ...
+if (image3 !== undefined) {
+
+ await pool.query("INSERT INTO property_visual (property_id , property_image_url) VALUES ($1,$2)" , [propertyid , image3])
+
+}
+
+
+if (image4 !== undefined) {
+
+  await pool.query("INSERT INTO property_visual (property_id , property_image_url) VALUES ($1,$2)" , [propertyid , image3])
+
+}
+
+
+return res.status(200).json({
+  success : true,
+  message : "All of Your Property Images Added Sucessfully."
+
+})
+
+
+} // try block ends here .
+
+
+catch (error : any) {
+
+  if (error?.code === "23503") {
+
+    return res.status(404).json({
+      success : false,
+      message : "Before adding property images you need to have other details of property."
+    })
+
+  }
+
+  console.log(error);
+  return res.status(500).json({
+    success : false,
+    message : "Server Error"
+  })
 
 
 
 }
+
+
+
+};
 
 
 async function MyProperties(req : Request , res : Response) {

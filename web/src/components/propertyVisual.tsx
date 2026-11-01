@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function AddPropertyVisuals() {
 
 
- const location =  useLocation(); // state used from previous route add propertyinfo.
+   let navigate = useNavigate();
+
+  const location =  useLocation(); // state used from previous route add propertyinfo.
  const propertyid = location.state // contains propertyId
 
   let {register , handleSubmit , reset} = useForm();
@@ -51,7 +53,14 @@ function AddPropertyVisuals() {
 
 
       const msg =  await result.json()
-      console.log(msg);
+
+    if (result.status === 200 && msg.success === true) {
+
+        reset();
+        toast.success("Property Images added Sucessfully.")
+       return  navigate("/myproperties")
+
+      }
 
     }
 
@@ -61,6 +70,7 @@ function AddPropertyVisuals() {
       console.log(error);
 
     }
+
 
 
   }
