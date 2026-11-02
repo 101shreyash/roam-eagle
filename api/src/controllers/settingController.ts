@@ -86,7 +86,10 @@ async function DeleteAllListedProperties(req : Request , res : Response) {
 
 const role = req.user?.role
 const userid = req.user?.userid
-const PlainPassword : string = req.body.password
+const PlainPassword : string = req.body?.password
+
+console.log(PlainPassword);
+
 
 if (role !== "landlord") {
 
@@ -106,11 +109,21 @@ if (!PlainPassword) {
 
 }
 
+
 try {
+
+  const checkPropertyCount = await pool.query("SELECT property_id FROM property_info WHERE userid = $1" , [userid])
+
+  if (checkPropertyCount.rowCount === 0) {
+   return res.status(404).json({
+      success : false,
+      message : "You don't have any properties to delete."
+    })
+}
 
 
 const result = await pool.query("SELECT hash_password  FROM users WHERE userid = $1;" , [userid])
-const hashedPassword = result.rows[0].hash_password
+const hashedPassword = result?.rows[0]?.hash_password
 const matched = await bcrypt.compare(PlainPassword , hashedPassword)
 
  if (!matched) {
@@ -124,12 +137,10 @@ const matched = await bcrypt.compare(PlainPassword , hashedPassword)
 
 await pool.query("DELETE FROM property_info WHERE userid = $1" , [userid])
 
-return res.json({
-  success : false,
+return res.status(200).json({
+  success : true,
   message : "All of your Listed properties got deleted."
 })
-
-
 
 }
 

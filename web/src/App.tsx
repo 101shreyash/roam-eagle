@@ -14,6 +14,7 @@ import ListProperty from "./components/listproperty";
 import AddPropertyVisuals from "./components/propertyVisual";
 import ChangeProfileDetails from "./components/changeProfileDetails";
 import MyProperties from "./components/myproperty";
+import UnlistAllYourProperties from "./components/unlistproperty";
 
 function App()  {
 
@@ -31,6 +32,7 @@ function App()  {
 <Route path="/mysettings/deleteaccount" element = {<DeleteAccount/>}/>
 <Route path="/mysettings/changepassword" element = {<ChangePassword/>}/>
 <Route path="/mysettings/changeprofile" element = {<ChangeProfileDetails/>}/>
+<Route path="/mysettings/unlistproperties" element = {<UnlistAllYourProperties/>}/>
 
 
 <Route path="/listproperty" element = {<ListProperty/>}/>

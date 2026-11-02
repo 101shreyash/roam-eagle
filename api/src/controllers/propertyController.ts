@@ -14,15 +14,15 @@ async function ListProperty(req: Request, res: Response) {
 
   const userid = req.user?.userid;
   const userRole = req.user?.role
-  const propertyStatus: string = req.body.status;
-  const title: string = req.body.title?.trim();
-  const description: string = req.body.description?.trim();
-  const totalrooms: string = req.body.totalrooms;
-  const basedOnCountry: string = req.body.country?.trim();
-  const city: string = req.body.city?.trim();
-  const postalCode: string = req.body.postalcode?.trim();
-  const monthlyprice: number = req.body.monthlyprice?.trim();
-  const negotiable: string = req.body.negotiable
+  const propertyStatus: string = req.body?.status;
+  const title: string = req.body?.title?.trim();
+  const description: string = req.body?.description?.trim();
+  const totalrooms: string = req.body?.totalrooms;
+  const basedOnCountry: string = req.body?.country?.trim();
+  const city: string = req.body?.city?.trim();
+  const postalCode: string = req.body?.postalcode?.trim();
+  const monthlyprice: number = req.body?.monthlyprice?.trim();
+  const negotiable: string = req.body?.negotiable
 
 
    if (userRole !== "landlord") {

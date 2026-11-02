@@ -4,9 +4,49 @@ import { FaArrowsRotate } from "react-icons/fa6";
 import { IoSettingsSharp } from "react-icons/io5";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { TiDocumentDelete } from "react-icons/ti";
+import { useEffect, useState } from "react";
+
 
 function Settings() {
+
+  let [userRole , setUserRole] = useState();
   const navigate = useNavigate();
+
+ async function CheckUserRole() {
+
+  try {
+
+
+ const result =  await fetch("http://localhost:8001/api/profileinfo" , {
+    credentials : "include",
+    headers : ({
+      'Content-Type' : "application/json"
+    })
+  })
+
+  const msg = await result.json();
+
+  setUserRole(msg.message.role)
+
+
+  }
+
+  catch (error) {
+
+    toast.error("Server Error")
+    console.log(error);
+  }
+
+ }
+
+
+useEffect(() => {
+
+CheckUserRole();
+
+} , [])
+
 
  async function Logout() {
 
@@ -36,11 +76,19 @@ function Settings() {
 
  }
 
-function ChangeProfileDetails() {
+
+ function ChangeProfileDetails() {
 
   return navigate("changeprofile")
 
 }
+
+function DeleteAllProperties() {
+
+  return navigate("unlistproperties")
+
+}
+
 
 
   return (
@@ -54,6 +102,10 @@ function ChangeProfileDetails() {
       <button onClick={ChangePassword} className="setting-links"> Change Account Password <FaArrowsRotate /> </button>
       <br /><br />
       <button onClick={ChangeProfileDetails} className="setting-links"> Change Profile Details <FaArrowsRotate /> </button>
+      <br /><br />
+
+      {userRole !== "applicant" ?  <button onClick={DeleteAllProperties} className="setting-links"> Unlist All Properties <TiDocumentDelete />  </button> : ""}
+
     </div>
   );
 }
