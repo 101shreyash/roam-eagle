@@ -85,6 +85,8 @@ async function ChangePassword(req: Request, res: Response) {
 async function DeleteAllListedProperties(req : Request , res : Response) {
 
 const role = req.user?.role
+const userid = req.user?.userid
+const PlainPassword : string = req.body.password
 
 if (role !== "landlord") {
 
@@ -92,10 +94,55 @@ if (role !== "landlord") {
     success : false,
     message : "You as a applicant cannot perform this action."
   })
+}
+
+
+if (!PlainPassword) {
+
+  return res.status(400).json({
+    success : false,
+    message : "To unlist all your properties you have to enter your account password."
+  })
 
 }
 
-// we will continue this action...
+try {
+
+
+const result = await pool.query("SELECT hash_password  FROM users WHERE userid = $1;" , [userid])
+const hashedPassword = result.rows[0].hash_password
+const matched = await bcrypt.compare(PlainPassword , hashedPassword)
+
+ if (!matched) {
+
+  return res.status(400).json({
+    success : false,
+    message : "Password didn't matched listed property deletation failed."
+  })
+
+ }
+
+await pool.query("DELETE FROM property_info WHERE userid = $1" , [userid])
+
+return res.json({
+  success : false,
+  message : "All of your Listed properties got deleted."
+})
+
+
+
+}
+
+catch (error) {
+
+  console.log(error);
+  return res.status(500).json({
+    success : false,
+    message : "Server Error"
+  })
+
+}
+
 
 
 }

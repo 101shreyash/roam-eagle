@@ -6,6 +6,5 @@ import ValidateAuthentication from "../middleware/authMiddleware.js";
 const Router = express.Router();
 
 Router.post("/changepassword" , ValidateAuthentication , ChangePassword)
-Router.post("/deletelistedproperties" , ValidateAuthentication , DeleteAllListedProperties)
 
 export default Router;
