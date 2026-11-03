@@ -333,7 +333,6 @@ catch (error : any) {
   })
 
 
-
 }
 
 
@@ -352,7 +351,6 @@ if (role === "applicant") {
     success : false,
     message : "You as an applicant cannot list and view your properties."
   })
-
 }
 
 const result = await pool.query("SELECT property_info.property_id , property_info.property_status , property_info.title , property_info.description , property_info.total_room , property_info.country , property_info.city , property_info.postal_code , property_info.monthly_price , property_info.negotiable , property_visual.visual_id , property_visual.property_image_url FROM property_info INNER JOIN property_visual ON property_info.property_id = property_visual.property_id  WHERE property_info.userid = $1;" , [userid])

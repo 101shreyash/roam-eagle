@@ -13,7 +13,6 @@ router.delete("/property" , ValidateAuthentication , DeleteAllListedProperties)
 
 
 
-
 // here im not sure about the architecture choice cause im importing DeleteAllListedProperties from Setting Controller , which voilates the typical backend structure but i think it makes more sense to say that , deleting all the user properties and propertiesVisual is the part of the setting and the reason im not using this router in settingRoute is because i think it looks good to pairup three property route together.
 
 

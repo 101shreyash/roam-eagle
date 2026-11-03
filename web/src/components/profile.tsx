@@ -52,13 +52,12 @@ useEffect(() => {
 
 <Link to="/mysettings" className="main-links"> <IoSettingsOutline />  Settings</Link>
 
-
  {role !== "applicant" ? <Link className="main-links" to="/listproperty">List Properties <MdOutlineEventNote>
   </MdOutlineEventNote>  </Link> : ""}
 
-{role === "applicant" ? <Link to= "#" className="main-links">Booked Properties <FaBookmark />
- </Link> : <Link className="main-links" to="#"> My Listed Properties <FaBookmark />
- </Link> }
+{role === "applicant" ? <Link to= "#" className="main-links">Booked Properties <FaBookmark /> </Link> :
+
+<Link className="main-links" to="/myproperties"> My Listed Properties <FaBookmark /> </Link> }
 
 <Link className="main-links" to="/browseproperty">Browse Property  <FaSearchLocation></FaSearchLocation> </Link>
 

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +7,44 @@ function UnlistAllYourProperties() {
 
   let {register , handleSubmit , reset} = useForm();
   let navigate =  useNavigate()
+
+  let [userRole , setUserRole] = useState("");
+
+  async function CheckUserRole() {
+
+
+   try {
+
+
+    const result =  await fetch("http://localhost:8001/api/profileinfo" , {
+    credentials : "include",
+    headers : ({
+      'Content-Type' : "application/json"
+    })
+  })
+
+    const msg  = await result.json();
+     setUserRole(msg.message.role)
+
+
+   }
+
+   catch (error) {
+
+     console.log(error);
+    return toast.error("Server Error")
+
+   }
+
+
+  }
+
+  useEffect(() => {
+
+    CheckUserRole();
+
+  } , [])
+
 
   async function AfterSubmit(data : any) {
 
@@ -62,10 +101,11 @@ function UnlistAllYourProperties() {
 
   return <div className="universal-div">
 
-    <h1 className="main-heading" style={{color : "red"}}> WARINING  !</h1>
+    {userRole !== "applicant" ? <>
+
+  <h1 className="main-heading" style={{color : "red"}}> WARINING  !</h1>
 
 <p style={{fontSize : "20px" , color : "white"}}>
-
 
 You are about to permanently delete all the properties you have listed on our platform so far. This action will remove every property associated with your account, including all uploaded property images, titles, descriptions, and other related property information. Once this process is completed, all of your listed properties and their associated data will be permanently erased from our system, and you will no longer be able to access, manage, or recover them. Please be aware that this action is irreversible and cannot be undone under any circumstances. We strongly recommend that you carefully review your decision before proceeding. If you are absolutely sure that you want to delete all of your listed properties, please enter your account password below to verify your identity and confirm this action.
 
@@ -79,6 +119,8 @@ You are about to permanently delete all the properties you have listed on our pl
 <button className="get-in-btn"> Delete All Properties</button>
 
  </form>
+
+    </> : <h1>404 Page Not Found !</h1>}
 
 
   </div>

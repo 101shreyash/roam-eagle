@@ -41,7 +41,7 @@ function App()  {
 
 <Route path="/aboutus" element = {<AboutUS/>}/>
 <Route path="/faq" element = {<FAQ/>}/>
-<Route path="*" element = {<h1 style={{marginTop : "10%" , fontSize : "40px"}}>404 Not Found</h1>}/>
+<Route path="*" element = {<h1 style={{marginTop : "10%" , fontSize : "40px"}}>404 Page Not Found !</h1>}/>
 
 </Routes>
 

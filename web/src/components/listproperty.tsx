@@ -1,11 +1,52 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 function ListProperty() {
 
-  let {register , handleSubmit} = useForm();
 
+ let [userRole , setUserRole] =  useState()
+
+   async function CheckUserRole() {
+
+
+   try {
+
+
+    const result =  await fetch("http://localhost:8001/api/profileinfo" , {
+    credentials : "include",
+    headers : ({
+      'Content-Type' : "application/json"
+    })
+  })
+
+    const msg  = await result.json();
+     setUserRole(msg.message.role)
+
+
+   }
+
+   catch (error) {
+
+     console.log(error);
+    return toast.error("Server Error")
+
+   }
+
+
+  }
+
+  useEffect(() => {
+
+    CheckUserRole();
+
+  } , [])
+
+
+
+
+  let {register , handleSubmit} = useForm();
   let navigate = useNavigate();
 
   async function AfterSubmit(data : any) {
@@ -128,6 +169,8 @@ catch (error) {
 
 return <div className="universal-div">
 
+{userRole !== "applicant" ? <>
+
 <h1 className="main-heading">List Your Property</h1>
 <form onSubmit={handleSubmit(AfterSubmit)}>
 
@@ -168,6 +211,11 @@ return <div className="universal-div">
 
 <button className="get-in-btn" type="submit">List Your Property</button>
 </form>
+
+
+
+</>  : <h1>404 Page Not Found !</h1>}
+
 
 
 </div>
