@@ -15,6 +15,7 @@ import AddPropertyVisuals from "./components/propertyVisual";
 import ChangeProfileDetails from "./components/changeProfileDetails";
 import MyProperties from "./components/myproperty";
 import UnlistAllYourProperties from "./components/unlistproperty";
+import MyPropertyVisuals from "./components/myPropertyVisual";
 
 function App()  {
 
@@ -38,6 +39,7 @@ function App()  {
 <Route path="/listproperty" element = {<ListProperty/>}/>
 <Route path="/propertyvisuals" element = {<AddPropertyVisuals/>}/>
 <Route path="/myproperties" element = {<MyProperties/>}/>
+<Route path="/myproperties/visuals" element = {<MyPropertyVisuals/>}/>
 
 <Route path="/aboutus" element = {<AboutUS/>}/>
 <Route path="/faq" element = {<FAQ/>}/>

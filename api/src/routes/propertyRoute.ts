@@ -1,15 +1,16 @@
 import express from "express";
 import ValidateAuthentication from "../middleware/authMiddleware.js";
-import { AddPropertyVisuals, ListProperty, MyProperties, propertyPictures } from "../controllers/propertyController.js";
+import { AddPropertyVisuals, GetPropertyVisuals, ListProperty, MyProperties, propertyPictures } from "../controllers/propertyController.js";
 import { DeleteAllListedProperties } from "../controllers/settingController.js";
 
 
 const router = express.Router();
 
 
-router.post("/property" , ValidateAuthentication , ListProperty)
 router.get("/property" , ValidateAuthentication , MyProperties)
+router.post("/property" , ValidateAuthentication , ListProperty)
 router.delete("/property" , ValidateAuthentication , DeleteAllListedProperties)
+router.get("/property/visual/:propertyid" , ValidateAuthentication , GetPropertyVisuals)
 
 
 

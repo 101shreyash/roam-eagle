@@ -1,9 +1,19 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { GrFormNext } from "react-icons/gr";
+import { FaPen } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
+
 
 function MyProperties() {
+
+
+  let navigate = useNavigate();
+
   let [userRole, setUserRole] = useState('');
   let [propertyExistence , setPropertyExistence] = useState(false);
+  let [propertyInfo , setPropertyInfo] = useState([]);
 
   async function CheckUserRole() {
     try {
@@ -16,6 +26,7 @@ function MyProperties() {
 
       const msg = await result.json();
       setUserRole(msg.message.role);
+
     } catch (error) {
       console.log(error);
       return toast.error("Server Error");
@@ -41,19 +52,18 @@ async function userListedProperties() {
 
     })
 
-    const msg = await result.json()
-
-    console.log(result.status);
-    console.log(msg.message);
+    const msg = await result.json();
 
     if (result.status === 404 && msg.success === false) {
-
       return setPropertyExistence(false)
     }
 
     if (result.status === 200 && msg.success === true) {
 
-           return setPropertyExistence(true)
+
+      setPropertyInfo(msg.message)
+      return setPropertyExistence(true)
+
     }
 
   }
@@ -82,22 +92,59 @@ userListedProperties();
 
     <div className="universal-div">
 
-     {userRole !== "applicant" ? <>
 
-     {propertyExistence === false ?   <h1 style={{color : "white"}}> You have No Properties Listed So Far! </h1>
+  {userRole === 'applicant' ? <h1>404 Page  Not Found !</h1> : <>
 
+    <h1 style={{color : "white"}} className="main-heading">Your Listed Properties</h1>
+    <hr />
 
-      : <>
-
-      <h1>We will continue tommorow</h1>
-
-      {/* Here we will now display all properties that is listed by the landlords (users)
-      including the property Images description and everything! */}
+   {propertyInfo.map((e : any) => {
 
 
-      </>}
+    function EditPropertyInfo(propertyId : any) {
 
-     </>  : <h1>404 Page Not Found!</h1>}
+      toast.success(`${propertyId}`)
+
+    }
+
+    function ViewPropertyVisuals(propertyId : any) {
+
+      return navigate("visuals" , {state : propertyId})
+
+    }
+
+
+
+    return <div key={e.property_id} className="property-div">
+
+   <h2 style={{color : "white"}}  className="sub-heading"> PropertyID : 1000{e.property_id}</h2>
+
+   <h2 style={{color : "white"}}  className="sub-heading">Property_Status : {e.property_status}</h2>
+
+   <h2 style={{color : "white"}}  className="sub-heading">Title : {e.title}</h2>
+
+   <h2 style={{color : "white"}}  className="sub-heading">description : {e.description}</h2>
+   <h2 style={{color : "white"}}  className="sub-heading">Total Room : {e.total_room}</h2>
+   <h2 style={{color : "white"}}  className="sub-heading">Property Located At : {e.country} , {e.city}</h2>
+   <h2 style={{color : "white"}}  className="sub-heading">Monthly Price : {e.monthly_price} </h2>
+   <h2 style={{color : "white"}} className="sub-heading"> Negotiable : {String(e.negotiable)}</h2>
+
+     <button onClick={() => ViewPropertyVisuals(e.property_id)} className="get-in-btn">View Images <GrFormNext /> </button>
+     &nbsp;
+     <button onClick={() => EditPropertyInfo(e.property_id)} className="get-in-btn">Edit Property Info <FaPen /> </button>
+   <br />
+   <hr />
+
+    </div>
+
+
+   })}
+
+
+
+  </>}
+
+
 
     </div>
 

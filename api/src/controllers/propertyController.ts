@@ -1,7 +1,6 @@
 import e, { Request, Response } from "express";
 import pool from "../db.js";
 import multer from "multer";
-import { log } from "node:console";
 
 
 // ----------- this belongs to Add propertry Visuals Function Down Below -----------------
@@ -291,13 +290,14 @@ try {
  await pool.query("INSERT INTO property_visual (property_id , property_image_url) VALUES ($1,$2)" , [propertyid , image2])
 
 
+ // image 3
 if (image3 !== undefined) {
 
  await pool.query("INSERT INTO property_visual (property_id , property_image_url) VALUES ($1,$2)" , [propertyid , image3])
 
 }
 
-
+//image 4
 if (image4 !== undefined) {
 
   await pool.query("INSERT INTO property_visual (property_id , property_image_url) VALUES ($1,$2)" , [propertyid , image3])
@@ -336,8 +336,65 @@ catch (error : any) {
 }
 
 
-
 };
+
+
+
+
+async function GetPropertyVisuals(req : Request , res : Response) {
+
+    try {
+
+    const role = req.user?.role
+    const propertyid  = Number(req.params?.propertyid)
+
+     if (role !== "landlord") {
+
+     return res.status(403).json({
+       success : false,
+        message : "You as a applicant cannot perform this action."
+      })
+    }
+
+
+    if (!propertyid) {
+
+    return res.status(400).json({
+         success : false,
+        message : "Be specific about the property's id to view related visuals."
+      })
+
+    }
+
+
+    if (Number.isNaN(propertyid) === true) {
+
+    return res.status(400).json({
+        success : false,
+        message : "Enter valid propertyid"
+      })
+    }
+
+
+   const result = await pool.query("SELECT visual_id , property_image_url FROM property_visual WHERE property_id = $1;" , [propertyid])
+
+   return res.status(200).json({
+    success : true,
+    message : result.rows
+   })
+
+  }
+
+  catch (error) {
+
+  console.log(error);
+  return res.status(500).json({
+      message : "Server Error"
+    })
+
+  }
+
+}
 
 
 async function MyProperties(req : Request , res : Response) {
@@ -353,8 +410,7 @@ if (role === "applicant") {
   })
 }
 
-const result = await pool.query("SELECT property_info.property_id , property_info.property_status , property_info.title , property_info.description , property_info.total_room , property_info.country , property_info.city , property_info.postal_code , property_info.monthly_price , property_info.negotiable , property_visual.visual_id , property_visual.property_image_url FROM property_info INNER JOIN property_visual ON property_info.property_id = property_visual.property_id  WHERE property_info.userid = $1;" , [userid])
-
+const result = await pool.query("SELECT property_id , property_status , title , description , total_room , country , city , monthly_price , negotiable FROM property_info WHERE userid = 55;");
 
 if (result.rowCount === 0) {
 
@@ -365,7 +421,6 @@ if (result.rowCount === 0) {
 
 }
 
-
 return res.status(200).json({
   success : true,
   message :  result.rows
@@ -374,4 +429,4 @@ return res.status(200).json({
 
 }
 
-export {ListProperty , MyProperties , AddPropertyVisuals};
+export {ListProperty , MyProperties , AddPropertyVisuals , GetPropertyVisuals};

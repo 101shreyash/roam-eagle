@@ -117,7 +117,6 @@ async function Login(req: Request, res: Response) {
 
   const userinfo: Userinfo = result.rows[0];
 
-
   if (result.rowCount === 0) {
     return res.status(401).json({
       success: false,
@@ -150,7 +149,6 @@ async function Login(req: Request, res: Response) {
 async function DeleteAccount(req : Request , res : Response) {
 
   const userid = req.user?.userid
-
   const password = req.body?.password
 
   if (!password) {
@@ -163,7 +161,6 @@ async function DeleteAccount(req : Request , res : Response) {
   }
 
 const result = await pool.query("SELECT hash_password , email FROM users WHERE userid = $1" , [userid])
-// console.log(result.rows.hash_password);
 
 const passMatched =  await bcrypt.compare(password , result.rows[0]?.hash_password)
 
@@ -176,7 +173,6 @@ const passMatched =  await bcrypt.compare(password , result.rows[0]?.hash_passwo
  }
 
  await pool.query("DELETE FROM users WHERE userid = $1" , [userid])
-
 res.clearCookie("jwt")
 
  return res.status(200).json({
